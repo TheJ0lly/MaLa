@@ -12,41 +12,65 @@ typedef enum {
     // 0 variables
     OP_HALT = 1,
 
-    // 1 variable
+    // 1 variable: register
     OP_PRINT,
 
-    // 2 variables
-    OP_LOAD,
+    // 2 variables: register | value
+    OP_LD1,
 
-    // 2 variables
+    // 3 variables: register | byte | byte 
+    OP_LD2,
+
+    // 5 variables: register | byte | byte | byte | byte 
+    OP_LD4,
+
+    // 9 variables: register | byte | byte | byte | byte | byte | byte | byte | byte 
+    OP_LD8,
+
+    // 2 variables: register to OR into -> register value
+    OP_OR,
+
+    // 2 variables: register to AND into -> register value
+    OP_AND,
+
+    // 2 variables: register to XOR into -> register value
+    OP_XOR,
+
+    // 2 variables: bits | register
+    OP_SHL,
+
+    // 2 variables: bits | register
+    OP_SHR,
+
+    // 2 variables: register value -> register
     OP_MOV,
 
     // Maths
-    // 2 variables
+    // 2 variables: register to add into -> register value
     OP_ADD,
-    // 2 variables
+    // 2 variables: register to sub into -> register value
     OP_SUB,
-    // 2 variables
-    OP_MULT,
-    // 2 variables
+    // 2 variables: register to mult into -> register value
+    OP_MLT,
+    // 2 variables: register to div into -> register value
     OP_DIV,
-    // 3 variables
+    // 3 variables: arg1 % arg2 -> arg3
     OP_MOD,
 
     // Compare
-    // 2 variables
+    // 2 variables: primary registers | second register
     OP_CMP,
 
     // Jumps
-    // 1 variable
+    // 1 variable: location
     OP_JMP,
-    // 1 variables
+    // 1 variable: location
     OP_JEQ,
-    // 1 variables
+    // 1 variable: location
     OP_JNE,
-    // 1 variables
+    // 1 variable: location
     OP_JGR,
-    // 1 variables
+    // 1 variable: location
     OP_JLE,
 } OP;
 

@@ -47,12 +47,71 @@ void execute_next(VM *vm) {
         printf("%ld\n", vm->regs[reg1]);
         break;
 
-    case OP_LOAD:
-        value = vm->memory[vm->ip++];
+    case OP_LD1:
         reg1 = vm->memory[vm->ip++];
+        value = vm->memory[vm->ip++];
         vm->regs[reg1] = value;
         break;
     
+    case OP_LD2:
+        reg1 = vm->memory[vm->ip++];
+        for (int i = 0; i < 2; i++) {
+            value = vm->memory[vm->ip++];
+            vm->regs[reg1] <<= 8;
+            vm->regs[reg1] |= value;
+        }
+        break;
+
+    case OP_LD4:
+        reg1 = vm->memory[vm->ip++];
+        for (int i = 0; i < 4; i++) {
+            value = vm->memory[vm->ip++];
+            vm->regs[reg1] <<= 8;
+            vm->regs[reg1] |= value;
+        }
+        break;
+
+    case OP_LD8:
+        reg1 = vm->memory[vm->ip++];
+        for (int i = 0; i < 8; i++) {
+            value = vm->memory[vm->ip++];
+            vm->regs[reg1] <<= 8;
+            vm->regs[reg1] |= value;
+        }
+        break;
+    
+    case OP_OR:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        vm->regs[reg1] |= vm->regs[reg2];
+        break;
+
+    case OP_AND:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        vm->regs[reg1] &= vm->regs[reg2];
+        break;
+    case OP_XOR:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        vm->regs[reg1] ^= vm->regs[reg2];
+        break;
+    case OP_SHL:
+        value = vm->memory[vm->ip++];
+        reg1 = vm->memory[vm->ip++];
+
+        vm->regs[reg1] <<= value;
+        break;
+    case OP_SHR:
+        value = vm->memory[vm->ip++];
+        reg1 = vm->memory[vm->ip++];
+
+        vm->regs[reg1] >>= value;
+        break;
+
     case OP_MOV:
         reg1 = vm->memory[vm->ip++];
         reg2 = vm->memory[vm->ip++];
@@ -72,7 +131,7 @@ void execute_next(VM *vm) {
         vm->regs[reg1] -= vm->regs[reg2];
         break;
     
-    case OP_MULT:
+    case OP_MLT:
         reg1 = vm->memory[vm->ip++];
         reg2 = vm->memory[vm->ip++];
         {

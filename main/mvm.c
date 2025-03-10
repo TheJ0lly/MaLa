@@ -3,13 +3,13 @@
 
 uint8_t fib[] = {
     // Fibonacci starting numbers
-    OP_LOAD, 0, 0,
-    OP_LOAD, 1, 1,
+    OP_LD1, 0, 0,
+    OP_LD1, 1, 1,
 
     // Counters
-    OP_LOAD, 1, 2,
-    OP_LOAD, 7, 3,
-    OP_LOAD, 1, 4,
+    OP_LD1, 2, 1,
+    OP_LD1, 3, 7,
+    OP_LD1, 4, 1,
 
     OP_CMP, 2, 3,
     OP_JGR, 36, // To halt
@@ -27,13 +27,23 @@ uint8_t fib[] = {
 
     OP_HALT,
 };
-int fib_size = 37;
+int fib_size = sizeof(fib);
+
+
+
+uint8_t test[] = {
+    OP_LD2, 0, 0x03, 0x00,
+    OP_SHR, 9, 0,
+    OP_PRINT, 0,
+    OP_HALT,
+};
+
+int test_size = sizeof(test);
+
 
 int main() {
-
-
     VM vm = {.ip = 0, .running = true, .err = NONE};
-    load_program(&vm, fib, fib_size);
+    load_program(&vm, test, test_size);
 
     while (vm.running) {
         execute_next(&vm);
