@@ -33,7 +33,9 @@ void execute_next(VM *vm) {
     }
 
     uint8_t op = vm->memory[vm->ip++];
-    uint8_t value, reg;
+    uint8_t reg1, reg2;
+    uint8_t value;
+
 
     switch (op) {
     case OP_HALT:
@@ -41,28 +43,60 @@ void execute_next(VM *vm) {
         break;
     
     case OP_PRINT:
-        reg = vm->memory[vm->ip++];
-        printf("%ld\n", vm->regs[reg]);
+        reg1 = vm->memory[vm->ip++];
+        printf("%ld\n", vm->regs[reg1]);
         break;
 
     case OP_LOAD:
         value = vm->memory[vm->ip++];
-        reg = vm->memory[vm->ip++];
-        vm->regs[reg] = value;
+        reg1 = vm->memory[vm->ip++];
+        vm->regs[reg1] = value;
         break;
 
     case OP_ADD:
-        reg = vm->memory[vm->ip++];
-        value = vm->memory[vm->ip++];
-        vm->regs[reg] += vm->regs[value];
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+        vm->regs[reg1] += vm->regs[reg2];
         break;
 
     case OP_SUB:
-        reg = vm->memory[vm->ip++];
-        value = vm->memory[vm->ip++];
-        vm->regs[reg] -= vm->regs[value];
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+        vm->regs[reg1] -= vm->regs[reg2];
         break;
     
+    case OP_MULT:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+        {
+            // We first store the actual result of the multiplication
+            // then we store it in the register so as to not lose bits.
+            double rez = (double)vm->regs[reg1] * (double)vm->regs[reg2];
+            vm->regs[reg1] = rez;
+        }
+        break;
+    
+    case OP_DIV:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+        {
+            // We first store the actual result of the division
+            // then we store it in the register so as to not lose bits.
+            double rez = (double)vm->regs[reg1] / (double)vm->regs[reg2];
+            vm->regs[reg1] = rez;
+        }
+        break;
+    
+    case OP_MOD:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+        // Here value represents the third register
+        value = vm->memory[vm->ip++];
+        
+        vm->regs[value] = vm->regs[reg1] % vm->regs[reg2];
+        break;
+
+
     default:
         vm->err = UNKNOWN;
         vm->running = false;

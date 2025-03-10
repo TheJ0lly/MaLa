@@ -18,11 +18,17 @@ typedef enum {
     // 2 variable
     OP_LOAD,
 
+    // Maths
     // 2 variables
     OP_ADD,
-
     // 2 variables
     OP_SUB,
+    // 2 variables
+    OP_MULT,
+    // 2 variables
+    OP_DIV,
+    // 3 variables
+    OP_MOD,
 } OP;
 
 typedef enum {

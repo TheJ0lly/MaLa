@@ -6,7 +6,13 @@ int main() {
         OP_LOAD, 25, 0,
         OP_LOAD, 2, 1,
         OP_ADD, 0, 1,
-        OP_PRINT, 0,
+        OP_LOAD, 3, 2,
+        OP_DIV, 0, 2,
+        OP_LOAD, 2, 3,
+        OP_MULT, 3, 0,
+        OP_LOAD, 7, 4,
+        OP_MOD, 3, 4, 5,
+        OP_PRINT, 5,
         OP_HALT
     };
 
