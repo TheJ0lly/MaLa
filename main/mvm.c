@@ -32,9 +32,11 @@ int fib_size = sizeof(fib);
 
 
 uint8_t test[] = {
-    OP_LD2, 0, 0x03, 0x00,
-    OP_SHR, 9, 0,
-    OP_PRINT, 0,
+    OP_LD1, 0, 0x03,
+    OP_LD1, 1, 0x0A,
+    OP_NEG, 1,
+    OP_MOD, 1, 0, 2,
+    OP_PRINT, 2,
     OP_HALT,
 };
 

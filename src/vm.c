@@ -79,6 +79,11 @@ void execute_next(VM *vm) {
             vm->regs[reg1] |= value;
         }
         break;
+
+    case OP_NEG:
+        reg1 = vm->memory[vm->ip++];
+        vm->regs[reg1] = (~vm->regs[reg1]) + 1;
+        break;
     
     case OP_OR:
         reg1 = vm->memory[vm->ip++];

@@ -27,6 +27,9 @@ typedef enum {
     // 9 variables: register | byte | byte | byte | byte | byte | byte | byte | byte 
     OP_LD8,
 
+    // 1 variable: register to negate
+    OP_NEG,
+
     // 2 variables: register to OR into -> register value
     OP_OR,
 
