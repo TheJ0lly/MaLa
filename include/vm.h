@@ -63,7 +63,7 @@ typedef enum {
 typedef struct {
     uint8_t memory[MAX_MEMORY];
     uint32_t ip;
-    uint64_t regs[MAX_REGISTER];
+    int64_t regs[MAX_REGISTER];
     ERROR err;
     bool running;
     COMPARISON cmp;
