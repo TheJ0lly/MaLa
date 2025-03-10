@@ -29,6 +29,22 @@ typedef enum {
     OP_DIV,
     // 3 variables
     OP_MOD,
+
+    // Compare
+    // 2 variables
+    OP_CMP,
+
+    // Jumps
+    // 1 variable
+    OP_JMP,
+    // 1 variables
+    OP_JEQ,
+    // 1 variables
+    OP_JNE,
+    // 1 variables
+    OP_JGR,
+    // 1 variables
+    OP_JLE,
 } OP;
 
 typedef enum {
@@ -38,6 +54,11 @@ typedef enum {
     UNDERFLOW,
 } ERROR;
 
+typedef enum {
+    LESS,
+    EQUAL,
+    GREATER,
+} COMPARISON;
 
 typedef struct {
     uint8_t memory[MAX_MEMORY];
@@ -45,6 +66,7 @@ typedef struct {
     uint64_t regs[MAX_REGISTER];
     ERROR err;
     bool running;
+    COMPARISON cmp;
 } VM;
 
 void load_program(VM *vm, uint8_t *program, uint32_t size);

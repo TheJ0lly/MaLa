@@ -90,10 +90,66 @@ void execute_next(VM *vm) {
     case OP_MOD:
         reg1 = vm->memory[vm->ip++];
         reg2 = vm->memory[vm->ip++];
-        // Here value represents the third register
+        // Here `value` represents the third register
         value = vm->memory[vm->ip++];
         
         vm->regs[value] = vm->regs[reg1] % vm->regs[reg2];
+        break;
+
+    case OP_CMP:
+        // We compare 2 registers, where the first is the subject of 
+        // comparison.
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        if (vm->regs[reg1] > vm->regs[reg2])
+            vm->cmp = GREATER;
+        else if (vm->regs[reg1] < vm->regs[reg2])
+            vm->cmp = LESS;
+        else
+            vm->cmp = EQUAL;
+        break;
+
+    case OP_JMP:
+        // Here `value` represents the location to jump to.
+        value = vm->memory[vm->ip++];
+        vm->ip = value;
+        break;
+
+    case OP_JEQ:
+        // Here `value` represents the location to jump to.
+        value = vm->memory[vm->ip++];
+
+        if (vm->cmp == EQUAL)
+            vm->ip = value;
+
+        break;
+    
+    case OP_JNE:
+        // Here `value` represents the location to jump to.
+        value = vm->memory[vm->ip++];
+
+        if (vm->cmp != EQUAL)
+            vm->ip = value;
+
+        break;
+
+    case OP_JGR:
+        // Here `value` represents the location to jump to.
+        value = vm->memory[vm->ip++];
+        
+        if (vm->cmp == GREATER)
+            vm->ip = value;
+
+        break;
+    
+    case OP_JLE:
+        // Here `value` represents the location to jump to.
+        value = vm->memory[vm->ip++];
+
+        if (vm->cmp == LESS)
+            vm->ip = value;
+
         break;
 
 
