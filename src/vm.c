@@ -52,6 +52,13 @@ void execute_next(VM *vm) {
         reg1 = vm->memory[vm->ip++];
         vm->regs[reg1] = value;
         break;
+    
+    case OP_MOV:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        vm->regs[reg2] = vm->regs[reg1];
+        break;
 
     case OP_ADD:
         reg1 = vm->memory[vm->ip++];

@@ -15,8 +15,11 @@ typedef enum {
     // 1 variable
     OP_PRINT,
 
-    // 2 variable
+    // 2 variables
     OP_LOAD,
+
+    // 2 variables
+    OP_MOV,
 
     // Maths
     // 2 variables
@@ -69,9 +72,9 @@ typedef struct {
     COMPARISON cmp;
 } VM;
 
-void load_program(VM *vm, uint8_t *program, uint32_t size);
-char * err_str(VM *vm);
-void execute_next(VM *vm);
+void   load_program(VM *vm, uint8_t *program, uint32_t size);
+char*  err_str(VM *vm);
+void   execute_next(VM *vm);
 
 
 #endif //__VM_H__
