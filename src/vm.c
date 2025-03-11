@@ -62,6 +62,7 @@ void execute_next(VM *vm) {
     uint8_t op = vm->memory[vm->ip++];
     uint8_t reg1, reg2;
     uint8_t value;
+    uint64_t address;
 
 
     switch (op) {
@@ -151,6 +152,23 @@ void execute_next(VM *vm) {
         vm->regs[reg2] = vm->regs[reg1];
         break;
 
+    case OP_MOA:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        address = vm->regs[reg2];
+        vm->memory[address] = vm->regs[reg1];
+
+        break;
+
+    case OP_LFA:
+        reg1 = vm->memory[vm->ip++];
+        reg2 = vm->memory[vm->ip++];
+
+        address = vm->regs[reg2];
+        vm->regs[reg1] = vm->memory[address];
+        break;
+
     case OP_ADD:
         reg1 = vm->memory[vm->ip++];
         reg2 = vm->memory[vm->ip++];
@@ -209,44 +227,39 @@ void execute_next(VM *vm) {
         break;
 
     case OP_JMP:
-        // Here `value` represents the location to jump to.
-        value = vm->memory[vm->ip++];
-        vm->ip = value;
+        address = vm->memory[vm->ip++];
+        vm->ip = address;
         break;
 
     case OP_JEQ:
-        // Here `value` represents the location to jump to.
-        value = vm->memory[vm->ip++];
+        address = vm->memory[vm->ip++];
 
         if (vm->cmp == EQUAL)
-            vm->ip = value;
+            vm->ip = address;
 
         break;
     
     case OP_JNE:
-        // Here `value` represents the location to jump to.
-        value = vm->memory[vm->ip++];
+        address = vm->memory[vm->ip++];
 
         if (vm->cmp != EQUAL)
-            vm->ip = value;
+            vm->ip = address;
 
         break;
 
     case OP_JGR:
-        // Here `value` represents the location to jump to.
-        value = vm->memory[vm->ip++];
+        address = vm->memory[vm->ip++];
         
         if (vm->cmp == GREATER)
-            vm->ip = value;
+            vm->ip = address;
 
         break;
     
     case OP_JLE:
-        // Here `value` represents the location to jump to.
-        value = vm->memory[vm->ip++];
+        address = vm->memory[vm->ip++];
 
         if (vm->cmp == LESS)
-            vm->ip = value;
+            vm->ip = address;
 
         break;
 

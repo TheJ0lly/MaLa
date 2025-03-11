@@ -48,6 +48,12 @@ typedef enum {
     // 2 variables: register value -> register
     OP_MOV,
 
+    // 2 variables: register value -> register that holds location.
+    OP_MOA,
+
+    // 2 variables: register to store | register that holds the location
+    OP_LFA,
+
     // Maths
     // 2 variables: register to add into -> register value
     OP_ADD,
