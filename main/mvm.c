@@ -37,6 +37,7 @@ uint8_t test[] = {
     OP_NEG, 1,
     OP_MOD, 1, 0, 2,
     OP_PRINT, 2,
+    // OP_JMP, 3,
     OP_HALT,
 };
 
@@ -51,7 +52,7 @@ int main() {
         execute_next(&vm);
 
         if (vm.err != NONE) {
-            printf("%s\n", err_str(&vm));
+            print_vm_state(&vm);
         }
     }
 }

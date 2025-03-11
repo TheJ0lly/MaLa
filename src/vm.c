@@ -6,6 +6,20 @@ void load_program(VM *vm, uint8_t *program, uint32_t size) {
     }
 }
 
+void print_vm_state(VM *vm) {
+    printf("== REGISTERS STATE ==\n");
+    for (int i = 0; i < MAX_REGISTER; i++) {
+        printf("  r%d:       %ld\n", i, vm->regs[i]);
+    }
+
+    printf("\n== MEMORY STATE ==\n");
+        printf("  ip:        %d\n", vm->ip);
+        printf("  last byte: %d\n", vm->memory[vm->ip]);
+        printf("  error:     %s\n", err_str(vm));
+        printf("  running:   %s\n", vm->running == true ? "true" : "false");
+        printf("  compare:   %s\n", cmp_str(vm->cmp));
+}
+
 char *err_str(VM *vm) {
     switch (vm->err) {
     case NONE:
@@ -22,6 +36,19 @@ char *err_str(VM *vm) {
 
     default:
         return "Unknown Error";
+    }
+}
+
+char *cmp_str(COMPARISON cmp){
+    switch (cmp) {
+    case LESS:
+        return "LESS";
+    case GREATER:
+        return "GREATER";
+    case EQUAL:
+        return "EQUAL";
+    default: // Should be unreachable
+        return "UNREACHABLE";
     }
 }
 

@@ -100,7 +100,9 @@ typedef struct {
 } VM;
 
 void   load_program(VM *vm, uint8_t *program, uint32_t size);
+void   print_vm_state(VM *vm);
 char*  err_str(VM *vm);
+char*  cmp_str(COMPARISON cmp);
 void   execute_next(VM *vm);
 
 
